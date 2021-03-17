@@ -24,5 +24,10 @@ namespace Lab1_UI_V2
         {
             InitializeComponent();
         }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
