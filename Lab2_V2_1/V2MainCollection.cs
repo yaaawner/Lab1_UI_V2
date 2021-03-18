@@ -3,32 +3,21 @@ using System.Collections;
 using System.Linq;
 using System;
 using System.Numerics;
-using System.ComponentModel;
-using System.Collections.Specialized;
-using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.CompilerServices;
+using System.Collections.Specialized;
+using System.IO;
 
 [assembly: InternalsVisibleToAttribute("Lab1_UI_V2")]
 
 namespace ClassLibrary
 {
-    [Serializable]
     class V2MainCollection : IEnumerable<V2Data>, System.Collections.Specialized.INotifyCollectionChanged
     {
         private List<V2Data> v2Datas;
 
         [field: NonSerialized]
-        public event DataChangedEventHandler DataChanged;
-        [field: NonSerialized]
         public event NotifyCollectionChangedEventHandler CollectionChanged;
-
-        /*
-        public bool DataChanged
-        {
-
-        }
-        */
 
         public bool CollectionChangedAfterSave // ???
         {
@@ -54,7 +43,7 @@ namespace ClassLibrary
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Save: " + ex.Message);
+                //Console.WriteLine("Save: " + ex.Message);
             }
             finally
             {
@@ -76,39 +65,12 @@ namespace ClassLibrary
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Load: " + ex.Message);
+                //Console.WriteLine("Load: " + ex.Message);
             }
             finally
             {
                 fileStream.Close();
                 CollectionChangedAfterSave = true;
-            }
-        }
-
-        protected void PropertyHandler(object source, PropertyChangedEventArgs args)
-        {
-            if (DataChanged != null)
-            {
-                V2Data v = (V2Data)source;
-                DataChanged(this, new DataChangedEventArgs(ChangeInfo.ItemChanged, v.Freq));
-            }
-        }
-
-        public V2Data this[int index]
-        {
-            get
-            {
-                return v2Datas[index];
-            }
-            set
-            {
-                v2Datas[index] = value;
-                
-                if (DataChanged != null)
-                {
-                    DataChanged(this, new DataChangedEventArgs(ChangeInfo.Replace, v2Datas[index].Freq));
-                }
-                v2Datas[index].PropertyChanged += PropertyHandler;
             }
         }
 
@@ -123,15 +85,9 @@ namespace ClassLibrary
             CollectionChangedAfterSave = false;
         }
 
-
         public void Add(V2Data item)
         {
             v2Datas.Add(item);
-            if (DataChanged != null)
-            {
-                DataChanged(this, new DataChangedEventArgs(ChangeInfo.Add, item.Freq));
-            }
-            item.PropertyChanged += PropertyHandler;
         }
 
         public bool Remove(string id, double w)
@@ -142,7 +98,6 @@ namespace ClassLibrary
             {
                 if (v2Datas[i].Freq == w && v2Datas[i].Info == id)
                 {
-                    v2Datas[i].PropertyChanged -= PropertyHandler;
                     v2Datas.Remove(v2Datas[i]);
                     flag = true;
                 }
@@ -152,21 +107,39 @@ namespace ClassLibrary
                 }
             }
 
-            if (DataChanged != null)
+            return flag;
+        }
+
+        public void AddTest()
+        {
+            Grid1D Ox = new Grid1D(10, 3);
+            Grid1D Oy = new Grid1D(10, 3);
+            v2Datas = new List<V2Data>();
+            V2DataOnGrid[] grid = new V2DataOnGrid[4];
+            V2DataCollection[] collections = new V2DataCollection[4];
+
+
+            for (int i = 0; i < 3; i++)
             {
-                DataChanged(this, new DataChangedEventArgs(ChangeInfo.Remove, w));
+                grid[i] = new V2DataOnGrid("data info2"/*+ i.ToString()*/, 2, Ox, Oy);     // test i = 2
+                collections[i] = new V2DataCollection("collection info" + i.ToString(), i);
             }
 
-            return flag;
+            for (int i = 0; i < 3; i++)
+            {
+                grid[i].initRandom(0, 100);
+                collections[i].initTest(4, 100, 100, 0, 100);
+                v2Datas.Add(grid[i]);
+                v2Datas.Add(collections[i]);
+            }
+
         }
 
         public void AddDefaults()
         {
-            if (v2Datas == null)
-                v2Datas = new List<V2Data>();
             Grid1D Ox = new Grid1D(10, 3);
             Grid1D Oy = new Grid1D(10, 3);
-            //v2Datas = new List<V2Data>();
+            v2Datas = new List<V2Data>();
             V2DataOnGrid[] grid = new V2DataOnGrid[4];
             V2DataCollection[] collections = new V2DataCollection[4];
 
@@ -180,8 +153,8 @@ namespace ClassLibrary
             {
                 grid[i].initRandom(0, 100);
                 collections[i].initRandom(4, 100, 100, 0, 100);
-                this.Add(grid[i]);
-                this.Add(collections[i]);
+                v2Datas.Add(grid[i]);
+                v2Datas.Add(collections[i]);
             }
 
             Grid1D nullOx = new Grid1D(0, 0);
@@ -191,8 +164,8 @@ namespace ClassLibrary
 
             grid[3].initRandom(0, 100);
             collections[3].initRandom(0, 100, 100, 0, 100);
-            this.Add(grid[3]);
-            this.Add(collections[3]);
+            v2Datas.Add(grid[3]);
+            v2Datas.Add(collections[3]);
         }
 
         public void AddDefaultDataCollection()
@@ -311,13 +284,22 @@ namespace ClassLibrary
         public IEnumerable<Vector2> Vectors
         {
             get
-            { 
+            {
 
-                return from elem in (from data in v2Datas
-                                     where data is V2DataCollection
-                                     select (V2DataCollection)data)
-                       from item in elem
-                       select item.Vector;
+                var collections = from data in v2Datas
+                                  where data is V2DataCollection
+                                  select (V2DataCollection)data;
+
+                var first = collections.First();
+                var notfirst = collections.Skip(1);
+
+                var v = from elem in first
+                        from a in notfirst
+                        from elema in a
+                        where elema.Vector == elem.Vector
+                        select elem.Vector;
+
+                return v.Distinct();
             }
         }
     }
