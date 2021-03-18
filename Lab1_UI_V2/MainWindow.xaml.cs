@@ -23,7 +23,7 @@ namespace Lab1_UI_V2
     public partial class MainWindow : Window
     {
         V2MainCollection mainCollection = new V2MainCollection();
-        CollectionView collectionView;
+        //CollectionView collectionView;
         /*
         CollectionView collectionView;
         public MainWindow()
@@ -69,20 +69,25 @@ namespace Lab1_UI_V2
 
         private void Remove_btn_Click(object sender, RoutedEventArgs e)
         {
+            var selectedMain = this.listBox_Main.SelectedItems;
+            List<V2Data> selectedItems = new List<V2Data>();
+            selectedItems.AddRange(selectedMain.Cast<V2Data>());
 
+            foreach (V2Data item in selectedItems)
+            {
+                mainCollection.Remove(item.Info, item.Freq);
+            }
         }
 
         
         private void DataCollection(object sender, FilterEventArgs args)
         {
-            
-                var item = args.Item;
-                if (item != null)
-                {
-                    if (item.GetType() == typeof(V2DataCollection)) args.Accepted = true;
-                    else args.Accepted = false;
-                }
-            
+            var item = args.Item;
+            if (item != null)
+            {
+                if (item.GetType() == typeof(V2DataCollection)) args.Accepted = true;
+                else args.Accepted = false;
+            }
         }
         
         private void DataOnGrid(object sender, FilterEventArgs args)

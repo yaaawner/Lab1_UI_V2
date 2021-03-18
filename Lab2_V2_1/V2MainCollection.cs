@@ -104,6 +104,7 @@ namespace ClassLibrary
                 {
                     v2Datas.Remove(v2Datas[i]);
                     flag = true;
+                    onCollectionChanged(NotifyCollectionChangedAction.Remove);
                 }
                 else
                 {
