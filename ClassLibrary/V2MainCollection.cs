@@ -7,6 +7,9 @@ using System.ComponentModel;
 using System.Collections.Specialized;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleToAttribute("Lab1_UI_V2")]
 
 namespace ClassLibrary
 {
@@ -181,6 +184,28 @@ namespace ClassLibrary
             collections[3].initRandom(0, 100, 100, 0, 100);
             this.Add(grid[3]);
             this.Add(collections[3]);
+        }
+
+        public void AddDefaultDataCollection()
+        {
+            V2DataCollection collection = new V2DataCollection("collection info ", 1);
+            collection.initRandom(4, 100, 100, 0, 100);
+            this.Add(collection);
+        }
+
+        public void AddDefaultDataOnGrid()
+        {
+            Grid1D Ox = new Grid1D(10, 3);
+            Grid1D Oy = new Grid1D(10, 3);
+            V2DataOnGrid grid = new V2DataOnGrid("data info ", 2, Ox, Oy);
+            grid.initRandom(0, 100);
+            this.Add(grid);
+        }
+
+        public void AddElementFromFile(string filename)
+        {
+            V2DataOnGrid datas = new V2DataOnGrid(filename);
+            this.Add(datas);
         }
 
         public override string ToString()

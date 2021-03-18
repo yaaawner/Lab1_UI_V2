@@ -13,11 +13,11 @@
             <MenuItem Header="Save"/>
         </Menu>
         <Menu Name="Edit" Margin="10,66,555,217" FontSize="16">
-            <MenuItem Header="Add Defaults"/>
-            <MenuItem Header="Add Default V2DataCollection"/>
-            <MenuItem Header="Add Default V2DataOnGrid"/>
-            <MenuItem Header="Add Element from File"/>
-            <MenuItem Header="Remove"/>
+            <MenuItem x:Name="AddDef_btn" Header="Add Defaults" Click="AddDef_btn_Click"/>
+            <MenuItem x:Name="AddDefDC_btn" Header="Add Default V2DataCollection" Click="AddDefDC_btn_Click"/>
+            <MenuItem x:Name="AddDefDOG_btn" Header="Add Default V2DataOnGrid" Click="AddDefDOG_btn_Click"/>
+            <MenuItem x:Name="AddElemFile_btn" Header="Add Element from File" Click="AddElemFile_btn_Click"/>
+            <MenuItem x:Name="Remove_btn" Header="Remove" Click="Remove_btn_Click"/>
         </Menu>
         <ListBox x:Name="listBox_Main" Margin="265,10,10,315"/>
         <ListBox x:Name="listBox_DataCollection" Margin="265,142,10,185"/>
