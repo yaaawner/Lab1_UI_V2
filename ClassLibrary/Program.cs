@@ -3,7 +3,6 @@ using System.Numerics;
 
 namespace ClassLibrary
 {
-
     enum ChangeInfo { ItemChanged, Add, Remove, Replace};
 
     delegate void DataChangedEventHandler(object source, DataChangedEventArgs args);
@@ -54,13 +53,14 @@ namespace ClassLibrary
         }
     }
 
+    
     class Program
     {
         private static void DataChangedHandler(object source, DataChangedEventArgs args)
         {
             Console.WriteLine(args.ToString());
         }
-
+        
         static void Main(string[] args)
         {
             try
@@ -103,5 +103,7 @@ namespace ClassLibrary
             }
 
         }
+        
     }
+    
 }

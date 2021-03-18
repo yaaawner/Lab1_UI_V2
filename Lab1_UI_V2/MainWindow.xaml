@@ -6,6 +6,15 @@
         xmlns:local="clr-namespace:Lab1_UI_V2"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+
+    <Window.Resources>
+        <CollectionViewSource  Source="{Binding}"  
+                               x:Key="key_view_DataCollection" Filter="DataCollection"/>
+        <!--<CollectionViewSource  Source="{Binding}"
+                               x:Key="key_view_DataOnGrid" Filter="DataOnGrid"/>-->
+    </Window.Resources>
+
+
     <Grid>
         <Menu Name="File" Margin="10,10,555,373" FontSize="16">
             <MenuItem Header="New"/>
@@ -19,9 +28,17 @@
             <MenuItem x:Name="AddElemFile_btn" Header="Add Element from File" Click="AddElemFile_btn_Click"/>
             <MenuItem x:Name="Remove_btn" Header="Remove" Click="Remove_btn_Click"/>
         </Menu>
-        <ListBox x:Name="listBox_Main" Margin="265,10,10,315"/>
-        <ListBox x:Name="listBox_DataCollection" Margin="265,142,10,185"/>
+        
+        <ListBox x:Name="listBox_Main"
+                 ItemsSource="{Binding}"
+                 Margin="265,10,10,315"/>
+        
+        <ListBox x:Name="listBox_DataCollection" 
+                 ItemsSource="{Binding Source={StaticResource key_view_DataCollection}}"
+                 Margin="265,142,10,185"/>
+        
         <ListBox x:Name="listBox_DataOnGrid" Margin="265,274,10,50"/>
+        
         <TextBlock HorizontalAlignment="Left" Margin="31,274,0,0" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Height="55" Width="134"/>
     </Grid>
 </Window>

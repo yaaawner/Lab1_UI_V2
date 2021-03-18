@@ -117,6 +117,13 @@ namespace ClassLibrary
             get { return v2Datas.Count; }
         }
 
+        public V2MainCollection()
+        {
+            this.v2Datas = new List<V2Data>();
+            CollectionChangedAfterSave = false;
+        }
+
+
         public void Add(V2Data item)
         {
             v2Datas.Add(item);
@@ -155,9 +162,11 @@ namespace ClassLibrary
 
         public void AddDefaults()
         {
+            if (v2Datas == null)
+                v2Datas = new List<V2Data>();
             Grid1D Ox = new Grid1D(10, 3);
             Grid1D Oy = new Grid1D(10, 3);
-            v2Datas = new List<V2Data>();
+            //v2Datas = new List<V2Data>();
             V2DataOnGrid[] grid = new V2DataOnGrid[4];
             V2DataCollection[] collections = new V2DataCollection[4];
 
@@ -188,6 +197,8 @@ namespace ClassLibrary
 
         public void AddDefaultDataCollection()
         {
+            if (v2Datas == null)
+                v2Datas = new List<V2Data>();
             V2DataCollection collection = new V2DataCollection("collection info ", 1);
             collection.initRandom(4, 100, 100, 0, 100);
             this.Add(collection);
@@ -195,6 +206,8 @@ namespace ClassLibrary
 
         public void AddDefaultDataOnGrid()
         {
+            if (v2Datas == null)
+                v2Datas = new List<V2Data>();
             Grid1D Ox = new Grid1D(10, 3);
             Grid1D Oy = new Grid1D(10, 3);
             V2DataOnGrid grid = new V2DataOnGrid("data info ", 2, Ox, Oy);
@@ -204,6 +217,8 @@ namespace ClassLibrary
 
         public void AddElementFromFile(string filename)
         {
+            if (v2Datas == null)
+                v2Datas = new List<V2Data>();
             V2DataOnGrid datas = new V2DataOnGrid(filename);
             this.Add(datas);
         }
