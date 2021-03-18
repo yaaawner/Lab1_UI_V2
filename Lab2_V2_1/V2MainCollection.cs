@@ -198,7 +198,7 @@ namespace ClassLibrary
         public void AddElementFromFile(string filename)
         {
             V2DataOnGrid datas = new V2DataOnGrid(filename);
-            v2Datas.Add(datas);
+            this.Add(datas);
         }
 
         public override string ToString()

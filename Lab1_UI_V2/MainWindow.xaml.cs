@@ -85,14 +85,14 @@ namespace Lab1_UI_V2
             
         }
         
-        //private void DataOnGrid(object sender, FilterEventArgs args)
-        //{
-        //    var item = args.Item;
-        //    if (item != null)
-        //    {
-        //        if (item.GetType() == typeof(V2DataOnGrid)) args.Accepted = true;
-        //        else args.Accepted = false;
-        //    }
-        //}
+        private void DataOnGrid(object sender, FilterEventArgs args)
+        {
+            var item = args.Item;
+            if (item != null)
+            {
+                if (item.GetType() == typeof(V2DataOnGrid)) args.Accepted = true;
+                else args.Accepted = false;
+            }
+        }
     }
 }
