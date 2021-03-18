@@ -47,7 +47,7 @@ namespace Lab1_UI_V2
 
         private void AddDef_btn_Click(object sender, RoutedEventArgs e)
         {
-            mainCollection.AddDefaults();
+            mainCollection.AddTest();
         }
 
         private void AddDefDC_btn_Click(object sender, RoutedEventArgs e)

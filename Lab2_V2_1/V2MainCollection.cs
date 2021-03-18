@@ -19,6 +19,15 @@ namespace ClassLibrary
         [field: NonSerialized]
         public event NotifyCollectionChangedEventHandler CollectionChanged;
 
+        public void onCollectionChanged(NotifyCollectionChangedAction ev)
+        {
+            if (CollectionChanged != null)
+            {
+                CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+            }
+        }
+
+
         public bool CollectionChangedAfterSave // ???
         {
             get; set;
@@ -79,15 +88,10 @@ namespace ClassLibrary
             get { return v2Datas.Count; }
         }
 
-        public V2MainCollection()
-        {
-            this.v2Datas = new List<V2Data>();
-            CollectionChangedAfterSave = false;
-        }
-
         public void Add(V2Data item)
         {
             v2Datas.Add(item);
+            onCollectionChanged(NotifyCollectionChangedAction.Add);
         }
 
         public bool Remove(string id, double w)
@@ -114,23 +118,23 @@ namespace ClassLibrary
         {
             Grid1D Ox = new Grid1D(10, 3);
             Grid1D Oy = new Grid1D(10, 3);
-            v2Datas = new List<V2Data>();
+            //v2Datas = new List<V2Data>();
             V2DataOnGrid[] grid = new V2DataOnGrid[4];
             V2DataCollection[] collections = new V2DataCollection[4];
 
 
             for (int i = 0; i < 3; i++)
             {
-                grid[i] = new V2DataOnGrid("data info2"/*+ i.ToString()*/, 2, Ox, Oy);     // test i = 2
-                collections[i] = new V2DataCollection("collection info" + i.ToString(), i);
+                grid[i] = new V2DataOnGrid("ЕУЫЕ"/*+ i.ToString()*/, 2, Ox, Oy);     // test i = 2
+                collections[i] = new V2DataCollection("sklnskvjzdfbjnsk" + i.ToString(), i);
             }
 
             for (int i = 0; i < 3; i++)
             {
                 grid[i].initRandom(0, 100);
                 collections[i].initTest(4, 100, 100, 0, 100);
-                v2Datas.Add(grid[i]);
-                v2Datas.Add(collections[i]);
+                this.Add(grid[i]);
+                this.Add(collections[i]);
             }
 
         }
@@ -168,19 +172,22 @@ namespace ClassLibrary
             v2Datas.Add(collections[3]);
         }
 
+        public V2MainCollection()
+        {
+            this.v2Datas = new List<V2Data>();
+            AddDefaults();
+            CollectionChangedAfterSave = false;
+        }
+
         public void AddDefaultDataCollection()
         {
-            if (v2Datas == null)
-                v2Datas = new List<V2Data>();
-            V2DataCollection collection = new V2DataCollection("collection info ", 1);
+            V2DataCollection collection = new V2DataCollection("aaaaaaaaa ", 1);
             collection.initRandom(4, 100, 100, 0, 100);
             this.Add(collection);
         }
 
         public void AddDefaultDataOnGrid()
         {
-            if (v2Datas == null)
-                v2Datas = new List<V2Data>();
             Grid1D Ox = new Grid1D(10, 3);
             Grid1D Oy = new Grid1D(10, 3);
             V2DataOnGrid grid = new V2DataOnGrid("data info ", 2, Ox, Oy);
@@ -190,10 +197,8 @@ namespace ClassLibrary
 
         public void AddElementFromFile(string filename)
         {
-            if (v2Datas == null)
-                v2Datas = new List<V2Data>();
             V2DataOnGrid datas = new V2DataOnGrid(filename);
-            this.Add(datas);
+            v2Datas.Add(datas);
         }
 
         public override string ToString()
