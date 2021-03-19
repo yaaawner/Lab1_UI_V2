@@ -17,7 +17,7 @@
 
     <Grid>
         <Menu Name="File" Margin="10,10,555,373" FontSize="16">
-            <MenuItem Header="New"/>
+            <MenuItem x:Name="New_btn" Header="New" Click="New_btn_Click"/>
             <MenuItem Header="Open"/>
             <MenuItem Header="Save"/>
         </Menu>

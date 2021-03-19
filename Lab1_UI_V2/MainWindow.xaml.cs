@@ -23,26 +23,11 @@ namespace Lab1_UI_V2
     public partial class MainWindow : Window
     {
         V2MainCollection mainCollection = new V2MainCollection();
-        //CollectionView collectionView;
-        /*
-        CollectionView collectionView;
-        public MainWindow()
-        {
-            InitializeComponent();
-            DataContext = collection;
-            collectionView = new CollectionView(collection);
-            collectionView.Filter = FilterByContains_5;
-            listBox_Contains5.DataContext = collectionView;
-        }
-
-        */
+       
         public MainWindow()
         {
             InitializeComponent();
             DataContext = mainCollection;
-            //collectionView = new CollectionView(mainCollection);
-            //collectionView.Filter = DataCollection;
-            //listBox_DataCollection.DataContext = collectionView;
         }
 
         private void AddDef_btn_Click(object sender, RoutedEventArgs e)
@@ -98,6 +83,12 @@ namespace Lab1_UI_V2
                 if (item.GetType() == typeof(V2DataOnGrid)) args.Accepted = true;
                 else args.Accepted = false;
             }
+        }
+
+        private void New_btn_Click(object sender, RoutedEventArgs e)
+        {
+            mainCollection = new V2MainCollection();
+            DataContext = mainCollection;
         }
     }
 }
