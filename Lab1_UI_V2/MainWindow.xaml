@@ -12,6 +12,8 @@
                                x:Key="key_view_DataCollection" Filter="DataCollection"/>
         <CollectionViewSource  Source="{Binding}"
                                x:Key="key_view_DataOnGrid" Filter="DataOnGrid"/>
+        <!--<CollectionViewSource  Source="{Binding}"
+                               x:Key="key_view_Average" Filter="Average"/>-->
     </Window.Resources>
 
 
@@ -40,9 +42,11 @@
         <ListBox x:Name="listBox_DataOnGrid" 
                  ItemsSource="{Binding Source={StaticResource key_view_DataOnGrid}}"
                  Margin="265,274,10,50"/>
-        
-        <TextBlock HorizontalAlignment="Left" Margin="31,274,0,0" 
-                   Text="TextBlock" TextWrapping="Wrap" 
+
+        <TextBlock x:Name="Average" HorizontalAlignment="Left" 
+                   Text="{Binding Path=Average}"
+                   Margin="31,274,0,0" 
+                   TextWrapping="Wrap" 
                    VerticalAlignment="Top" 
                    Height="55" Width="134"/>
     </Grid>

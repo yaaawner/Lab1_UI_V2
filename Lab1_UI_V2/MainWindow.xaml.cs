@@ -23,11 +23,13 @@ namespace Lab1_UI_V2
     public partial class MainWindow : Window
     {
         V2MainCollection mainCollection = new V2MainCollection();
+        //TextBlock text = new TextBlock();
        
         public MainWindow()
         {
             InitializeComponent();
             DataContext = mainCollection;
+            //text.Text = mainCollection.Average.ToString();
         }
 
         private void AddDef_btn_Click(object sender, RoutedEventArgs e)
@@ -90,5 +92,11 @@ namespace Lab1_UI_V2
             mainCollection = new V2MainCollection();
             DataContext = mainCollection;
         }
+
+        /*private void Average(object sender, FilterEventArgs args)
+        {
+
+        }
+        */
     }
 }
