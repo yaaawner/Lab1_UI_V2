@@ -7,17 +7,20 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.CompilerServices;
 using System.Collections.Specialized;
 using System.IO;
+using System.ComponentModel;
 
 [assembly: InternalsVisibleToAttribute("Lab1_UI_V2")]
 
 namespace ClassLibrary
 {
-    class V2MainCollection : IEnumerable<V2Data>, System.Collections.Specialized.INotifyCollectionChanged
+    class V2MainCollection : IEnumerable<V2Data>, System.Collections.Specialized.INotifyCollectionChanged, System.ComponentModel.INotifyPropertyChanged
     {
         private List<V2Data> v2Datas;
 
         [field: NonSerialized]
         public event NotifyCollectionChangedEventHandler CollectionChanged;
+        [field: NonSerialized]
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public void onCollectionChanged(NotifyCollectionChangedAction ev)
         {
@@ -27,6 +30,11 @@ namespace ClassLibrary
             }
         }
 
+        public void OnPropertyChanged(string prop = "")
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
 
         public bool CollectionChangedAfterSave // ???
         {
@@ -92,6 +100,7 @@ namespace ClassLibrary
         {
             v2Datas.Add(item);
             onCollectionChanged(NotifyCollectionChangedAction.Add);
+            OnPropertyChanged("Average");
         }
 
         public bool Remove(string id, double w)
@@ -112,6 +121,7 @@ namespace ClassLibrary
                 }
             }
 
+            OnPropertyChanged("Average");
             return flag;
         }
 
@@ -249,6 +259,7 @@ namespace ClassLibrary
 
                 IEnumerable<DataItem> items = collection.Union(grid);
 
+                //OnPropertyChanged("Average");
                 return items.Average(n => n.Complex.Magnitude);
             }
         }
