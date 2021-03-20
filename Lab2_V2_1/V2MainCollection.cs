@@ -79,10 +79,12 @@ namespace ClassLibrary
                 fileStream = File.OpenRead(filename);
                 BinaryFormatter binaryFormatter = new BinaryFormatter();
                 v2Datas = (List<V2Data>)binaryFormatter.Deserialize(fileStream);
+                //onCollectionChanged(NotifyCollectionChangedAction.Add);
+                //OnPropertyChanged("Average");
             }
             catch (Exception ex)
             {
-                //Console.WriteLine("Load: " + ex.Message);
+                Console.WriteLine("Load: " + ex.Message);
             }
             finally
             {
@@ -136,7 +138,7 @@ namespace ClassLibrary
 
             for (int i = 0; i < 3; i++)
             {
-                grid[i] = new V2DataOnGrid("ЕУЫЕ"/*+ i.ToString()*/, 2, Ox, Oy);     // test i = 2
+                grid[i] = new V2DataOnGrid("TEST"/*+ i.ToString()*/, 2, Ox, Oy);     // test i = 2
                 collections[i] = new V2DataCollection("sklnskvjzdfbjnsk" + i.ToString(), i);
             }
 
@@ -186,7 +188,7 @@ namespace ClassLibrary
         public V2MainCollection()
         {
             this.v2Datas = new List<V2Data>();
-            AddDefaults();
+            //AddDefaults();
             CollectionChangedAfterSave = false;
         }
 

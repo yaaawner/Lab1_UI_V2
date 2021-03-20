@@ -100,6 +100,18 @@ namespace Lab1_UI_V2
                 mainCollection.Save(dialog.FileName);
         }
 
+        private void Open_btn_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
+            if ((bool)dialog.ShowDialog())
+            {
+                mainCollection = new V2MainCollection();
+                mainCollection.Load(dialog.FileName);
+                DataContext = mainCollection;
+                
+            }
+        }
+
         /*private void Average(object sender, FilterEventArgs args)
         {
 
