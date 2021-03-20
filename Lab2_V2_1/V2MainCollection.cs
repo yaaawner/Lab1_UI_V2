@@ -41,7 +41,7 @@ namespace ClassLibrary
             get; set;
         }
 
-        public void Save(string filename) // сериализация?
+        public void Save(string filename) 
         {
             FileStream fileStream = null;
 

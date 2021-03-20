@@ -21,7 +21,7 @@
         <Menu Name="File" Margin="10,10,555,373" FontSize="16">
             <MenuItem x:Name="New_btn" Header="New" Click="New_btn_Click"/>
             <MenuItem Header="Open"/>
-            <MenuItem Header="Save"/>
+            <MenuItem x:Name="Save_btn" Header="Save" Click="Save_Click"/>
         </Menu>
         <Menu Name="Edit" Margin="10,66,555,217" FontSize="16">
             <MenuItem x:Name="AddDef_btn" Header="Add Defaults" Click="AddDef_btn_Click"/>

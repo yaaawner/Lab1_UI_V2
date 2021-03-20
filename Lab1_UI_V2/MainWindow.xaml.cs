@@ -93,6 +93,13 @@ namespace Lab1_UI_V2
             DataContext = mainCollection;
         }
 
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
+            if ((bool)dialog.ShowDialog())
+                mainCollection.Save(dialog.FileName);
+        }
+
         /*private void Average(object sender, FilterEventArgs args)
         {
 
