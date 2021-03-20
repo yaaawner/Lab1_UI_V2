@@ -22,7 +22,7 @@ namespace ClassLibrary
         [field: NonSerialized]
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void onCollectionChanged(NotifyCollectionChangedAction ev)
+        public void OnCollectionChanged(NotifyCollectionChangedAction ev)
         {
             if (CollectionChanged != null)
             {
@@ -60,7 +60,7 @@ namespace ClassLibrary
             }
             catch (Exception ex)
             {
-                //Console.WriteLine("Save: " + ex.Message);
+                Console.WriteLine("Save: " + ex.Message);
             }
             finally
             {
@@ -101,8 +101,9 @@ namespace ClassLibrary
         public void Add(V2Data item)
         {
             v2Datas.Add(item);
-            onCollectionChanged(NotifyCollectionChangedAction.Add);
+            OnCollectionChanged(NotifyCollectionChangedAction.Add);
             OnPropertyChanged("Average");
+            CollectionChangedAfterSave = true;
         }
 
         public bool Remove(string id, double w)
@@ -113,9 +114,12 @@ namespace ClassLibrary
             {
                 if (v2Datas[i].Freq == w && v2Datas[i].Info == id)
                 {
-                    v2Datas.Remove(v2Datas[i]);
+                    v2Datas.RemoveAt(i);
                     flag = true;
-                    onCollectionChanged(NotifyCollectionChangedAction.Remove);
+                    OnCollectionChanged(NotifyCollectionChangedAction.Remove);
+                    OnPropertyChanged("Average");
+                    CollectionChangedAfterSave = true;
+                    break;
                 }
                 else
                 {
@@ -123,7 +127,7 @@ namespace ClassLibrary
                 }
             }
 
-            OnPropertyChanged("Average");
+            //OnPropertyChanged("Average");
             return flag;
         }
 
@@ -170,8 +174,8 @@ namespace ClassLibrary
             {
                 grid[i].initRandom(0, 100);
                 collections[i].initRandom(4, 100, 100, 0, 100);
-                v2Datas.Add(grid[i]);
-                v2Datas.Add(collections[i]);
+                this.Add(grid[i]);
+                this.Add(collections[i]);
             }
 
             Grid1D nullOx = new Grid1D(0, 0);
@@ -181,8 +185,8 @@ namespace ClassLibrary
 
             grid[3].initRandom(0, 100);
             collections[3].initRandom(0, 100, 100, 0, 100);
-            v2Datas.Add(grid[3]);
-            v2Datas.Add(collections[3]);
+            this.Add(grid[3]);
+            this.Add(collections[3]);
         }
 
         public V2MainCollection()

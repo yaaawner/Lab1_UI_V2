@@ -89,19 +89,27 @@ namespace Lab1_UI_V2
 
         private void New_btn_Click(object sender, RoutedEventArgs e)
         {
+            if (mainCollection.CollectionChangedAfterSave)
+            {
+                UnsavedChanges();
+            }
             mainCollection = new V2MainCollection();
             DataContext = mainCollection;
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
+            Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
             if ((bool)dialog.ShowDialog())
                 mainCollection.Save(dialog.FileName);
         }
 
         private void Open_btn_Click(object sender, RoutedEventArgs e)
         {
+            if (mainCollection.CollectionChangedAfterSave)
+            {
+                UnsavedChanges();
+            }
             Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
             if ((bool)dialog.ShowDialog())
             {
@@ -109,6 +117,31 @@ namespace Lab1_UI_V2
                 mainCollection.Load(dialog.FileName);
                 DataContext = mainCollection;
                 
+            }
+        }
+
+        private bool UnsavedChanges()
+        {
+            MessageBoxResult message = MessageBox.Show("You have unsaved changes. Do you want save it?", "Save", MessageBoxButton.YesNoCancel);
+            if (message == MessageBoxResult.Yes)
+            {
+                Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
+                if ((bool)dialog.ShowDialog())
+                    mainCollection.Save(dialog.FileName);
+                
+            }
+            else if (message == MessageBoxResult.Cancel)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (mainCollection.CollectionChangedAfterSave)
+            {
+                e.Cancel = UnsavedChanges();
             }
         }
 
