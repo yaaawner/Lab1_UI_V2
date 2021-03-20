@@ -260,7 +260,9 @@ namespace ClassLibrary
                 IEnumerable<DataItem> items = collection.Union(grid);
 
                 //OnPropertyChanged("Average");
-                return items.Average(n => n.Complex.Magnitude);
+                if (items.Count() != 0)
+                    return items.Average(n => n.Complex.Magnitude);
+                else return 0;
             }
         }
 

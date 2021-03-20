@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace ClassLibrary
 {
-    struct DataItem
+    [Serializable]
+    struct DataItem:ISerializable
     {
         public Vector2 Vector { get; set; }
         public Complex Complex { get; set; }
@@ -28,5 +30,19 @@ namespace ClassLibrary
                    "Complex: " + Complex.ToString(format);
         }
 
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("Vector_X", Vector.X);
+            info.AddValue("Vector_Y", Vector.Y);
+            info.AddValue("Complex", Complex);
+        }
+
+        public DataItem(SerializationInfo info, StreamingContext context)
+        {
+            float x = info.GetSingle("Vector_X");
+            float y = info.GetSingle("Vector_Y");
+            Vector = new Vector2(x, y);
+            Complex = (Complex)info.GetValue("Complex", typeof(System.Numerics.Complex));
+        }
     }
 }

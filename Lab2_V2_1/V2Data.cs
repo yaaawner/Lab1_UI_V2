@@ -5,6 +5,7 @@ using System.Numerics;
 
 namespace ClassLibrary
 {
+    [Serializable]
     abstract class V2Data
     {
         public string Info { get; set; }
