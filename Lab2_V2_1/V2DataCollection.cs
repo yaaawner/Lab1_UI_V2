@@ -5,6 +5,7 @@ using System.Collections;
 
 namespace ClassLibrary
 {
+    [Serializable]
     class V2DataCollection : V2Data, IEnumerable<DataItem>
     {
         public List<DataItem> dataItems { get; set; }

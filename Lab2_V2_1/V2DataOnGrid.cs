@@ -7,6 +7,7 @@ using System.Globalization;
 
 namespace ClassLibrary
 {
+    [Serializable]
     class V2DataOnGrid : V2Data, IEnumerable<DataItem>
     {
         public Grid1D[] Grids { get; set; }
