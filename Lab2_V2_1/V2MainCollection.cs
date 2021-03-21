@@ -16,7 +16,7 @@ using System.Windows;
 namespace ClassLibrary
 {
     [Serializable]
-    class V2MainCollection : IEnumerable<V2Data>, System.Collections.Specialized.INotifyCollectionChanged, System.ComponentModel.INotifyPropertyChanged
+    class V2MainCollection : IEnumerable<V2Data>, System.Collections.Specialized.INotifyCollectionChanged, INotifyPropertyChanged
     {
         private List<V2Data> v2Datas;
 
@@ -39,7 +39,7 @@ namespace ClassLibrary
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
 
-        public bool CollectionChangedAfterSave // ???
+        public bool CollectionChangedAfterSave 
         {
             get; set;
         }
@@ -80,7 +80,7 @@ namespace ClassLibrary
             }
         }
 
-        public void Load(string filename) // десериализация?
+        public void Load(string filename) 
         {
             FileStream fileStream = null;
 
@@ -155,7 +155,7 @@ namespace ClassLibrary
 
             for (int i = 0; i < 3; i++)
             {
-                grid[i] = new V2DataOnGrid("TEST"/*+ i.ToString()*/, 2, Ox, Oy);     // test i = 2
+                grid[i] = new V2DataOnGrid("TEST", 2, Ox, Oy);    
                 collections[i] = new V2DataCollection("sklnskvjzdfbjnsk" + i.ToString(), i);
             }
 
@@ -166,7 +166,6 @@ namespace ClassLibrary
                 this.Add(grid[i]);
                 this.Add(collections[i]);
             }
-
         }
 
         public void AddDefaults()
