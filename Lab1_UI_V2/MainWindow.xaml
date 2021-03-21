@@ -13,14 +13,14 @@
                                x:Key="key_view_DataCollection" Filter="DataCollection"/>
         <CollectionViewSource  Source="{Binding}"
                                x:Key="key_view_DataOnGrid" Filter="DataOnGrid"/>
-        <!--<CollectionViewSource  Source="{Binding}"
-                               x:Key="key_view_Details" Filter="Details"/>-->
+        
         <DataTemplate x:Key="Details">
             <StackPanel Margin="5">
                 <TextBlock FontSize="12" Text="{Binding Path=Vector}" HorizontalAlignment="Left" />
                 <TextBlock FontSize="12" Text="{Binding Path=Complex}" HorizontalAlignment="Left" />
             </StackPanel>
         </DataTemplate>
+
     </Window.Resources>
 
 
@@ -59,16 +59,32 @@
 
         <TextBlock x:Name="CollectionChangedAfterSave" HorizontalAlignment="Left" 
                    Text="{Binding Path=CollectionChangedAfterSave}"
-                   Margin="566,15,0,0" 
+                   Margin="535,10,0,0" 
                    TextWrapping="Wrap" 
-                   VerticalAlignment="Top"/>
+                   VerticalAlignment="Top"
+                   Height="110" 
+                   Width="255"/>
 
         <ListBox x:Name="listbox_details" 
                  ItemsSource ="{Binding ElementName=listBox_DataCollection, Path=SelectedItem}"
                  ItemTemplate="{StaticResource Details}"
                  Margin="535,142,10,182">
-           
-
         </ListBox>
+        
+        <TextBlock HorizontalAlignment="Left" 
+                   Margin="535,274,0,0" 
+                   Text="{Binding ElementName=listBox_DataOnGrid, Path=SelectedItem.Min}"
+                   TextWrapping="Wrap" 
+                   VerticalAlignment="Top" 
+                   Height="30" 
+                   Width="255"/>
+        
+        <TextBlock HorizontalAlignment="Left" 
+                   Margin="535,313,0,0" 
+                   Text="{Binding ElementName=listBox_DataOnGrid, Path=SelectedItem.Max}" 
+                   TextWrapping="Wrap" 
+                   VerticalAlignment="Top" 
+                   Width="255" 
+                   Height="30"/>
     </Grid>
 </Window>
