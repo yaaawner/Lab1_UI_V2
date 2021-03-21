@@ -14,7 +14,13 @@
         <CollectionViewSource  Source="{Binding}"
                                x:Key="key_view_DataOnGrid" Filter="DataOnGrid"/>
         <!--<CollectionViewSource  Source="{Binding}"
-                               x:Key="key_view_Average" Filter="Average"/>-->
+                               x:Key="key_view_Details" Filter="Details"/>-->
+        <DataTemplate x:Key="Details">
+            <StackPanel Margin="5">
+                <TextBlock FontSize="12" Text="{Binding Path=Vector}" HorizontalAlignment="Left" />
+                <TextBlock FontSize="12" Text="{Binding Path=Complex}" HorizontalAlignment="Left" />
+            </StackPanel>
+        </DataTemplate>
     </Window.Resources>
 
 
@@ -31,18 +37,18 @@
             <MenuItem x:Name="AddElemFile_btn" Header="Add Element from File" Click="AddElemFile_btn_Click"/>
             <MenuItem x:Name="Remove_btn" Header="Remove" Click="Remove_btn_Click"/>
         </Menu>
-        
+
         <ListBox x:Name="listBox_Main"
                  ItemsSource="{Binding}"
-                 Margin="265,10,10,315"/>
-        
+                 Margin="265,10,280,315"/>
+
         <ListBox x:Name="listBox_DataCollection" 
                  ItemsSource="{Binding Source={StaticResource key_view_DataCollection}}"
-                 Margin="265,142,10,185"/>
-        
+                 Margin="265,142,280,185"/>
+
         <ListBox x:Name="listBox_DataOnGrid" 
                  ItemsSource="{Binding Source={StaticResource key_view_DataOnGrid}}"
-                 Margin="265,274,10,50"/>
+                 Margin="265,274,280,50"/>
 
         <TextBlock x:Name="Average" HorizontalAlignment="Left" 
                    Text="{Binding Path=Average}"
@@ -50,5 +56,19 @@
                    TextWrapping="Wrap" 
                    VerticalAlignment="Top" 
                    Height="55" Width="134"/>
+
+        <TextBlock x:Name="CollectionChangedAfterSave" HorizontalAlignment="Left" 
+                   Text="{Binding Path=CollectionChangedAfterSave}"
+                   Margin="566,15,0,0" 
+                   TextWrapping="Wrap" 
+                   VerticalAlignment="Top"/>
+
+        <ListBox x:Name="listbox_details" 
+                 ItemsSource ="{Binding ElementName=listBox_DataCollection, Path=SelectedItem}"
+                 ItemTemplate="{StaticResource Details}"
+                 Margin="535,142,10,182">
+           
+
+        </ListBox>
     </Grid>
 </Window>

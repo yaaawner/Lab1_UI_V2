@@ -4,6 +4,7 @@ using System.Text;
 
 namespace ClassLibrary
 {
+    [Serializable]
     struct Grid1D
     {
         public float Step { get; set; }

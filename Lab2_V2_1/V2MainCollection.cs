@@ -8,11 +8,14 @@ using System.Runtime.CompilerServices;
 using System.Collections.Specialized;
 using System.IO;
 using System.ComponentModel;
+using System.Windows;
+//using Lab1_UI_V2;
 
 [assembly: InternalsVisibleToAttribute("Lab1_UI_V2")]
 
 namespace ClassLibrary
 {
+    [Serializable]
     class V2MainCollection : IEnumerable<V2Data>, System.Collections.Specialized.INotifyCollectionChanged, System.ComponentModel.INotifyPropertyChanged
     {
         private List<V2Data> v2Datas;
@@ -41,6 +44,12 @@ namespace ClassLibrary
             get; set;
         }
 
+        //[field: NonSerialized]
+        public string ErrorMessage
+        {
+            get; set;
+        }
+
         public void Save(string filename) 
         {
             FileStream fileStream = null;
@@ -60,13 +69,14 @@ namespace ClassLibrary
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Save: " + ex.Message);
+                this.ErrorMessage = "Save: " + ex.Message;
             }
             finally
             {
                 if (fileStream != null)
                     fileStream.Close();
                 CollectionChangedAfterSave = false;
+                OnPropertyChanged("CollectionChangedAfterSave");
             }
         }
 
@@ -84,12 +94,13 @@ namespace ClassLibrary
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Load: " + ex.Message);
+                this.ErrorMessage = "Load: " + ex.Message;
             }
             finally
             {
                 fileStream.Close();
                 CollectionChangedAfterSave = true;
+                OnPropertyChanged("CollectionChangedAfterSave");
             }
         }
 
@@ -104,6 +115,7 @@ namespace ClassLibrary
             OnCollectionChanged(NotifyCollectionChangedAction.Add);
             OnPropertyChanged("Average");
             CollectionChangedAfterSave = true;
+            OnPropertyChanged("CollectionChangedAfterSave");
         }
 
         public bool Remove(string id, double w)
@@ -119,6 +131,7 @@ namespace ClassLibrary
                     OnCollectionChanged(NotifyCollectionChangedAction.Remove);
                     OnPropertyChanged("Average");
                     CollectionChangedAfterSave = true;
+                    OnPropertyChanged("CollectionChangedAfterSave");
                     break;
                 }
                 else

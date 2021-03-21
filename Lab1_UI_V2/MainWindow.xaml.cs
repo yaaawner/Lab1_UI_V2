@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.DirectoryServices.ActiveDirectory;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,6 +15,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ClassLibrary;
+
+//[assembly: InternalsVisibleToAttribute("ClassLibrary")]
 
 namespace Lab1_UI_V2
 {
@@ -34,7 +37,7 @@ namespace Lab1_UI_V2
 
         private void AddDef_btn_Click(object sender, RoutedEventArgs e)
         {
-            mainCollection.AddTest();
+            mainCollection.AddDefaults();
         }
 
         private void AddDefDC_btn_Click(object sender, RoutedEventArgs e)
@@ -95,6 +98,7 @@ namespace Lab1_UI_V2
             }
             mainCollection = new V2MainCollection();
             DataContext = mainCollection;
+            MessageError();
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
@@ -102,6 +106,7 @@ namespace Lab1_UI_V2
             Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
             if ((bool)dialog.ShowDialog())
                 mainCollection.Save(dialog.FileName);
+            MessageError();
         }
 
         private void Open_btn_Click(object sender, RoutedEventArgs e)
@@ -118,6 +123,7 @@ namespace Lab1_UI_V2
                 DataContext = mainCollection;
                 
             }
+            MessageError();
         }
 
         private bool UnsavedChanges()
@@ -143,7 +149,32 @@ namespace Lab1_UI_V2
             {
                 e.Cancel = UnsavedChanges();
             }
+            MessageError();
         }
+
+        public void MessageError()
+        {
+            if (mainCollection.ErrorMessage != null)
+            {
+                MessageBox.Show(mainCollection.ErrorMessage, "Error");
+                mainCollection.ErrorMessage = null;
+            }
+        }
+
+        //private void Details(object sender, FilterEventArgs e)
+        //{
+        //    var selectedCollection = this.listBox_DataCollection.SelectedItems;
+        //    List<V2Data> selectedItems = new List<V2Data>();
+        //    selectedItems.AddRange(selectedCollection.Cast<V2Data>());
+
+        //    var item = e.Item;
+            
+        //    if (item != null)
+        //    {
+        //        if (item.GetType() == typeof(V2DataCollection)) e.Accepted = true;
+        //        else e.Accepted = false;
+        //    }
+        //}
 
         /*private void Average(object sender, FilterEventArgs args)
         {
