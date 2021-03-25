@@ -132,6 +132,12 @@ namespace ClassLibrary
             finally
             {
                 if (fs != null) fs.Close();
+                if (Grids == null)
+                {
+                    Exception ex = new Exception("Cannot add grid from file");
+                    //const string V = "Add grids from file";
+                    throw ex;
+                }
             }
         }
 
@@ -211,8 +217,14 @@ namespace ClassLibrary
 
         public override string ToString()
         {
-            return "Type: 2DataOnGrid Base: Info: " + Info.ToString() + " Freq: " + Freq.ToString()
-                 + " Ox: " + Grids[0].ToString() + " Oy: " + Grids[1].ToString();
+            if (Grids != null)
+            {
+                return "Type: 2DataOnGrid Base: Info: " + Info.ToString() + " Freq: " + Freq.ToString()
+                     + " Ox: " + Grids[0].ToString() + " Oy: " + Grids[1].ToString();
+            } else
+            {
+                return "null";
+            }
         }
 
         public override string ToLongString()
@@ -257,12 +269,15 @@ namespace ClassLibrary
         {
             V2DataCollection ret = new V2DataCollection(Info, Freq);
 
-            for (int i = 0; i < Grids[0].Num; i++)
+            if (Grids != null)
             {
-                for (int j = 0; j < Grids[1].Num; j++)
+                for (int i = 0; i < Grids[0].Num; i++)
                 {
-                    ret.dataItems.Add(new DataItem(new Vector2((i + 1) * Grids[0].Step,
-                        (j + 1) * Grids[1].Step), Node[i, j]));
+                    for (int j = 0; j < Grids[1].Num; j++)
+                    {
+                        ret.dataItems.Add(new DataItem(new Vector2((i + 1) * Grids[0].Step,
+                            (j + 1) * Grids[1].Step), Node[i, j]));
+                    }
                 }
             }
             return ((IEnumerable<DataItem>)ret.dataItems).GetEnumerator();

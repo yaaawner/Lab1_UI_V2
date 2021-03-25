@@ -111,11 +111,18 @@ namespace ClassLibrary
 
         public void Add(V2Data item)
         {
-            v2Datas.Add(item);
-            OnCollectionChanged(NotifyCollectionChangedAction.Add);
-            OnPropertyChanged("Average");
-            CollectionChangedAfterSave = true;
-            OnPropertyChanged("CollectionChangedAfterSave");
+            try
+            {
+                v2Datas.Add(item);
+                OnCollectionChanged(NotifyCollectionChangedAction.Add);
+                OnPropertyChanged("Average");
+                CollectionChangedAfterSave = true;
+                OnPropertyChanged("CollectionChangedAfterSave");
+            }
+            catch (Exception ex)
+            {
+                this.ErrorMessage = "Add Element from file: " + ex.Message;
+            }
         }
 
         public bool Remove(string id, double w)
@@ -226,18 +233,34 @@ namespace ClassLibrary
 
         public void AddElementFromFile(string filename)
         {
-            V2DataOnGrid datas = new V2DataOnGrid(filename);
-            this.Add(datas);
+            try
+            {
+                V2DataOnGrid datas = new V2DataOnGrid(filename);
+                this.Add(datas); 
+            }
+            catch (Exception ex)
+            {
+                this.ErrorMessage = "Add Element from file: " + ex.Message;
+                //OnPropertyChanged("ErrorMessage");
+            }
         }
 
         public override string ToString()
         {
             string ret = "";
-            foreach (V2Data data in v2Datas)
+            try
             {
-                ret += (data.ToString() + '\n');
+                foreach (V2Data data in v2Datas)
+                {
+                    ret += (data.ToString() + '\n');
+                }
+            }
+            catch (Exception ex)
+            {
+                this.ErrorMessage = "To String: " + ex.Message;
             }
             return ret;
+            
         }
 
         public IEnumerator<V2Data> GetEnumerator()

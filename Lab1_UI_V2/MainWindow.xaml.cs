@@ -30,9 +30,12 @@ namespace Lab1_UI_V2
        
         public MainWindow()
         {
-            InitializeComponent();
-            DataContext = mainCollection;
-            //text.Text = mainCollection.Average.ToString();
+            
+                InitializeComponent();
+                DataContext = mainCollection;
+                //text.Text = mainCollection.Average.ToString();
+            
+            
         }
 
         private void AddDef_btn_Click(object sender, RoutedEventArgs e)
@@ -55,6 +58,7 @@ namespace Lab1_UI_V2
             Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
             if ((bool)dialog.ShowDialog())
                 mainCollection.AddElementFromFile(dialog.FileName);
+            MessageError();
         }
 
         private void Remove_btn_Click(object sender, RoutedEventArgs e)

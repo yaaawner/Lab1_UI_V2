@@ -13,7 +13,7 @@
                                x:Key="key_view_DataCollection" Filter="DataCollection"/>
         <CollectionViewSource  Source="{Binding}"
                                x:Key="key_view_DataOnGrid" Filter="DataOnGrid"/>
-        
+
         <DataTemplate x:Key="Details">
             <StackPanel Margin="5">
                 <TextBlock FontSize="12" Text="{Binding Path=Vector}" HorizontalAlignment="Left" />
@@ -40,15 +40,15 @@
 
         <ListBox x:Name="listBox_Main"
                  ItemsSource="{Binding}"
-                 Margin="265,10,280,315"/>
+                 Margin="265,24,280,301"/>
 
         <ListBox x:Name="listBox_DataCollection" 
                  ItemsSource="{Binding Source={StaticResource key_view_DataCollection}}"
-                 Margin="265,142,280,185"/>
+                 Margin="265,167,280,160"/>
 
         <ListBox x:Name="listBox_DataOnGrid" 
                  ItemsSource="{Binding Source={StaticResource key_view_DataOnGrid}}"
-                 Margin="265,274,280,50"/>
+                 Margin="265,313,280,11"/>
 
         <TextBlock x:Name="Average" HorizontalAlignment="Left" 
                    Text="{Binding Path=Average}"
@@ -59,32 +59,42 @@
 
         <TextBlock x:Name="CollectionChangedAfterSave" HorizontalAlignment="Left" 
                    Text="{Binding Path=CollectionChangedAfterSave}"
-                   Margin="535,10,0,0" 
+                   Margin="535,48,0,0" 
                    TextWrapping="Wrap" 
                    VerticalAlignment="Top"
-                   Height="110" 
+                   Height="47" 
                    Width="255"/>
 
         <ListBox x:Name="listbox_details" 
                  ItemsSource ="{Binding ElementName=listBox_DataCollection, Path=SelectedItem}"
                  ItemTemplate="{StaticResource Details}"
-                 Margin="535,142,10,182">
+                 Margin="535,167,10,160">
         </ListBox>
-        
-        <TextBlock HorizontalAlignment="Left" 
-                   Margin="535,274,0,0" 
+
+        <TextBlock x:Name="textblock_min" 
+                   HorizontalAlignment="Left" 
+                   Margin="535,379,0,0" 
                    Text="{Binding ElementName=listBox_DataOnGrid, Path=SelectedItem.Min}"
                    TextWrapping="Wrap" 
                    VerticalAlignment="Top" 
                    Height="30" 
                    Width="255"/>
-        
-        <TextBlock HorizontalAlignment="Left" 
-                   Margin="535,313,0,0" 
+
+        <TextBlock x:Name="textblock_max" 
+                   HorizontalAlignment="Left" 
+                   Margin="535,316,0,0" 
                    Text="{Binding ElementName=listBox_DataOnGrid, Path=SelectedItem.Max}" 
                    TextWrapping="Wrap" 
                    VerticalAlignment="Top" 
                    Width="255" 
                    Height="30"/>
+        <TextBlock HorizontalAlignment="Left" Margin="31,258,0,0" Text="Average" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="265,8,0,0" Text="Main Collection" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="265,151,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="83" Height="16"><Run Text="Data Collection"/><LineBreak/><Run/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="265,297,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="83" Height="16"><Run Text="Data On Grid"/><LineBreak/><Run/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="535,24,0,0" Text="Changes After Save" TextWrapping="Wrap" VerticalAlignment="Top" Width="110"/>
+        <TextBlock HorizontalAlignment="Left" Margin="535,151,0,0" Text="Details of Data" TextWrapping="Wrap" VerticalAlignment="Top" Width="127"/>
+        <TextBlock HorizontalAlignment="Left" Margin="535,297,0,0" Text="Max in Grid" TextWrapping="Wrap" VerticalAlignment="Top" Width="85"/>
+        <TextBlock HorizontalAlignment="Left" Margin="535,363,0,0" Text="Min in Grid" TextWrapping="Wrap" VerticalAlignment="Top" Width="63"/>
     </Grid>
 </Window>
